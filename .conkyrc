@@ -47,20 +47,20 @@ $alignc           ${exec sensors|grep 'Core 4'|awk '{print $3}'} $alignr ${freq_
 CPU5:  ${cpubar cpu5}
 $alignc           ${exec sensors|grep 'Core 5'|awk '{print $3}'} $alignr ${freq_g 6} GHz            ${cpu cpu6} % 
 CPU6:  ${cpubar cpu6}
-$alignc           ${exec sensors|grep 'Core 6'|awk '{print $3}'} $alignr ${freq_g 7} GHz            ${cpu cpu7} %
+$alignc           ${exec sensors|grep 'Core 0'|awk '{print $3}'} $alignr ${freq_g 7} GHz            ${cpu cpu7} %
 CPU7:  ${cpubar cpu7}
-$alignc           ${exec sensors|grep 'Core 7'|awk '{print $3}'} $alignr ${freq_g 8} GHz            ${cpu cpu8} %
+$alignc           ${exec sensors|grep 'Core 1'|awk '{print $3}'} $alignr ${freq_g 8} GHz            ${cpu cpu8} %
 CPU8:  ${cpubar cpu8}
-$alignc           ${exec sensors|grep 'Core 8'|awk '{print $3}'} $alignr ${freq_g 9} GHz            ${cpu cpu9} %
+$alignc           ${exec sensors|grep 'Core 2'|awk '{print $3}'} $alignr ${freq_g 9} GHz            ${cpu cpu9} %
 CPU9:  ${cpubar cpu9}
-$alignc           ${exec sensors|grep 'Core 9'|awk '{print $3}'} $alignr ${freq_g 10} GHz            ${cpu cpu10} %
+$alignc           ${exec sensors|grep 'Core 3'|awk '{print $3}'} $alignr ${freq_g 10} GHz            ${cpu cpu10} %
 CPU10:  ${cpubar cpu10}
-$alignc           ${exec sensors|grep 'Core 10'|awk '{print $3}'} $alignr ${freq_g 11} GHz            ${cpu cpu11} %
+$alignc           ${exec sensors|grep 'Core 4'|awk '{print $3}'} $alignr ${freq_g 11} GHz            ${cpu cpu11} %
 CPU11:  ${cpubar cpu11}
-$alignc           ${exec sensors|grep 'Core 11'|awk '{print $3}'} $alignr ${freq_g 12} GHz            ${cpu cpu12} %
+$alignc           ${exec sensors|grep 'Core 5'|awk '{print $3}'} $alignr ${freq_g 12} GHz            ${cpu cpu12} %
 CPU12:  ${cpubar cpu12}
 
-#Esto nos muestra la particion Home, la RAM y la sawp con una barra de cada una y sus datos
+#Esto nos muestra la partición Home, la RAM y la sawp con una barra de cada una y sus datos
 ${font Ubuntu:style=bold:size=13}Memoria y disco $hr
 ${font Ubuntu:style=bold:size=9}HOME $alignc ${fs_used /home} / ${fs_size /home} $alignr ${fs_used_perc /} %
 ${fs_bar /home}
