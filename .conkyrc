@@ -1,0 +1,121 @@
+background no
+font Snap.se:size=8
+xftfont Snap.se:size=8
+use_xft yes
+xftalpha 0.1
+update_interval 3.0
+total_run_times 0
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+minimum_size 200 6
+maximum_width 365
+default_color ffffff
+default_shade_color 000000
+default_outline_color 000000
+alignment top_right
+gap_x 10
+gap_y 10
+no_buffers yes
+cpu_avg_samples 2
+override_utf8_locale yes
+uppercase no # set to yes if you want all text to be in uppercase
+use_spacer no
+own_window_argb_visual yes
+ 
+TEXT
+#Aqui empieza la configuracion de los datos que se muestran
+#El primero es el nombre del sistema operativo y la version del kernel
+
+#${font Ubuntu:style=bold:size=12}$sysname $alignr $kernel
+#Esto nos muestra los dos procesadores y una barra de cada uno de ellos con su uso
+#${font Ubuntu:style=bold:size=10}
+${font Ubuntu:style=bold:size=13}Procesadores $hr
+${font Ubuntu:style=bold:size=9}${color1}CPU: ${color #FCAF3E}${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq}
+
+${color1} $alignc           ${exec sensors|grep 'Core 0'|awk '{print $3}'} $alignr ${freq_g 1} GHz            ${cpu cpu1} % 
+CPU1:  ${cpubar cpu1}
+${color1} $alignc           ${exec sensors|grep 'Core 1'|awk '{print $3}'} $alignr ${freq_g 2} GHz            ${cpu cpu2} % 
+CPU2:  ${cpubar cpu2}
+$alignc           ${exec sensors|grep 'Core 2'|awk '{print $3}'} $alignr ${freq_g 3} GHz            ${cpu cpu3} % 
+CPU3:  ${cpubar cpu3}
+$alignc           ${exec sensors|grep 'Core 3'|awk '{print $3}'} $alignr ${freq_g 4} GHz            ${cpu cpu4} % 
+CPU4:  ${cpubar cpu4}
+$alignc           ${exec sensors|grep 'Core 4'|awk '{print $3}'} $alignr ${freq_g 5} GHz            ${cpu cpu5} % 
+CPU5:  ${cpubar cpu5}
+$alignc           ${exec sensors|grep 'Core 5'|awk '{print $3}'} $alignr ${freq_g 6} GHz            ${cpu cpu6} % 
+CPU6:  ${cpubar cpu6}
+$alignc           ${exec sensors|grep 'Core 6'|awk '{print $3}'} $alignr ${freq_g 7} GHz            ${cpu cpu7} %
+CPU7:  ${cpubar cpu7}
+$alignc           ${exec sensors|grep 'Core 7'|awk '{print $3}'} $alignr ${freq_g 8} GHz            ${cpu cpu8} %
+CPU8:  ${cpubar cpu8}
+$alignc           ${exec sensors|grep 'Core 8'|awk '{print $3}'} $alignr ${freq_g 9} GHz            ${cpu cpu9} %
+CPU9:  ${cpubar cpu9}
+$alignc           ${exec sensors|grep 'Core 9'|awk '{print $3}'} $alignr ${freq_g 10} GHz            ${cpu cpu10} %
+CPU10:  ${cpubar cpu10}
+$alignc           ${exec sensors|grep 'Core 10'|awk '{print $3}'} $alignr ${freq_g 11} GHz            ${cpu cpu11} %
+CPU11:  ${cpubar cpu11}
+$alignc           ${exec sensors|grep 'Core 11'|awk '{print $3}'} $alignr ${freq_g 12} GHz            ${cpu cpu12} %
+CPU12:  ${cpubar cpu12}
+#Esto nos muestra la temperatura de los procesadores
+#Temperatura: $alignr ${acpitemp} ºC
+#Ventilador: $alignr${acpifan} %
+#Esto nos muestra el número de procesos (en ejecucion)
+#Procesos: ${alignr}$processes ($running_processes corriendo)
+
+#Esto nos muestra la particion Home, la RAM y la sawp con una barra cada una y sus datos
+${font Ubuntu:style=bold:size=13}Memoria y disco $hr
+${font Ubuntu:style=bold:size=9}HOME $alignc ${fs_used /home} / ${fs_size /home} $alignr ${fs_used_perc /} %
+${fs_bar /home}
+${font Ubuntu:style=bold:size=9}RAM $alignc $mem / $memmax $alignr $memperc %
+${membar}
+${font Ubuntu:style=bold:size=9}SWAP $alignc $swap / $swapmax  $alignr ${swapperc} %
+$swapbar
+
+#Temperatura disco: $alignr ${hddtemp} ºC 
+#GPU Attributes:
+${font Ubuntu:style=bold:size=13}Tarjeta Grafica $hr
+${font Ubuntu:style=bold:size=9}${color1}GPU: ${color #FCAF3E}${exec nvidia-smi --query-gpu=gpu_name --format=csv,noheader,nounits} $color
+
+${color1}Uso: ${color} $alignr ${exec nvidia-smi | grep % | cut -c 61-63} %
+${color1}VRAM: ${color} $alignr ${exec nvidia-smi | grep % | cut -c 37-40} MiB / ${exec nvidia-smi --query-gpu=memory.total --format=csv,noheader}
+${color1}Temperatura: ${color} $alignr ${execi 60 nvidia-settings -query [gpu:0]/GPUCoreTemp -t} ºC
+#Ventilador: $alignr ${exec nvidia-smi -a | grep -i fan} %
+#${color1}Consumo: ${color} $alignr ${exec nvidia-smi | grep % | cut -c 21-23} W
+ 
+#Esto nos muestra el estado de la bateria con una barra
+#${font Ubuntu:style=bold:size=14}Bateria $hr
+#${font Ubuntu:style=bold:size=10} ${battery BAT0} $alignr
+#${battery_bar BAT0}
+#
+#Esto nos muestra la conexion con una barra y su potencia
+${font Ubuntu:style=bold:size=13}Redes $hr
+${font Ubuntu:style=bold:size=9}Intensidad WIFI $alignr ${wireless_link_qual wlo1} %
+#Esto nos muestra la velocidad de descarga y subida de internet con graficos
+${font Ubuntu:style=bold:size=9}Descarga $alignr ${downspeed wlo1}/s
+#${downspeedgraph wlan0 30,210 01df01 10fd10}
+${font Ubuntu:style=bold:size=9}Subida $alignr ${upspeed wlo1}/s
+#${upspeedgraph wlan0 30,210 0000ff ff0000}
+
+#Esto muestra el uso de la CPU de las aplicaciones que mas hacen uso de ella
+${font Ubuntu:style=bold:size=13}Uso CPU aplicaciones $hr
+${font Ubuntu:style=bold:size=9}${top name 1}$alignr${top cpu 1} %
+${top name 2}$alignr${top cpu 2} %
+#${top name 3}$alignr${top cpu 3} %
+ 
+#Esto nos muestra el procentaje de RAM que usan las aplicaciones de ella
+${font Ubuntu:style=bold:size=13}Uso RAM aplicaciones $hr
+${font Ubuntu:style=bold:size=9}${top_mem name 1}$alignr${top_mem mem 1} %
+${top_mem name 2}$alignr${top_mem mem 2} %
+#${top_mem name 3}$alignr${top_mem mem 3} %
+
+#Esto muestra el uso de la GPU de las aplicaciones que mas hacen uso de ella
+#${font Ubuntu:style=bold:size=13}Uso GPU aplicaciones $hr
+#${font Ubuntu:style=bold:size=9}$alignr${top cpu 2} %
+#$alignr${nvtop Graphic 1} %
