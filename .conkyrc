@@ -30,12 +30,8 @@ use_spacer no
 own_window_argb_visual yes
  
 TEXT
-#Aqui empieza la configuracion de los datos que se muestran
-#El primero es el nombre del sistema operativo y la version del kernel
 
-#${font Ubuntu:style=bold:size=12}$sysname $alignr $kernel
-#Esto nos muestra los dos procesadores y una barra de cada uno de ellos con su uso
-#${font Ubuntu:style=bold:size=10}
+#Esto nos muestra la CPU, sus doce procesadores (lógicos), su frecuencia actual y su temperatura, así como una barra de cada uno de ellos con su uso
 ${font Ubuntu:style=bold:size=13}Procesadores $hr
 ${font Ubuntu:style=bold:size=9}${color1}CPU: ${color #FCAF3E}${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq}
 
@@ -63,13 +59,8 @@ $alignc           ${exec sensors|grep 'Core 10'|awk '{print $3}'} $alignr ${freq
 CPU11:  ${cpubar cpu11}
 $alignc           ${exec sensors|grep 'Core 11'|awk '{print $3}'} $alignr ${freq_g 12} GHz            ${cpu cpu12} %
 CPU12:  ${cpubar cpu12}
-#Esto nos muestra la temperatura de los procesadores
-#Temperatura: $alignr ${acpitemp} ºC
-#Ventilador: $alignr${acpifan} %
-#Esto nos muestra el número de procesos (en ejecucion)
-#Procesos: ${alignr}$processes ($running_processes corriendo)
 
-#Esto nos muestra la particion Home, la RAM y la sawp con una barra cada una y sus datos
+#Esto nos muestra la particion Home, la RAM y la sawp con una barra de cada una y sus datos
 ${font Ubuntu:style=bold:size=13}Memoria y disco $hr
 ${font Ubuntu:style=bold:size=9}HOME $alignc ${fs_used /home} / ${fs_size /home} $alignr ${fs_used_perc /} %
 ${fs_bar /home}
@@ -77,45 +68,30 @@ ${font Ubuntu:style=bold:size=9}RAM $alignc $mem / $memmax $alignr $memperc %
 ${membar}
 ${font Ubuntu:style=bold:size=9}SWAP $alignc $swap / $swapmax  $alignr ${swapperc} %
 $swapbar
-
-#Temperatura disco: $alignr ${hddtemp} ºC 
-#GPU Attributes:
+ 
+#Esto nos muestra la GPU, su uso, memoria y temperatura
 ${font Ubuntu:style=bold:size=13}Tarjeta Grafica $hr
 ${font Ubuntu:style=bold:size=9}${color1}GPU: ${color #FCAF3E}${exec nvidia-smi --query-gpu=gpu_name --format=csv,noheader,nounits} $color
 
 ${color1}Uso: ${color} $alignr ${exec nvidia-smi | grep % | cut -c 61-63} %
 ${color1}VRAM: ${color} $alignr ${exec nvidia-smi | grep % | cut -c 37-40} MiB / ${exec nvidia-smi --query-gpu=memory.total --format=csv,noheader}
 ${color1}Temperatura: ${color} $alignr ${execi 60 nvidia-settings -query [gpu:0]/GPUCoreTemp -t} ºC
-#Ventilador: $alignr ${exec nvidia-smi -a | grep -i fan} %
-#${color1}Consumo: ${color} $alignr ${exec nvidia-smi | grep % | cut -c 21-23} W
  
-#Esto nos muestra el estado de la bateria con una barra
-#${font Ubuntu:style=bold:size=14}Bateria $hr
-#${font Ubuntu:style=bold:size=10} ${battery BAT0} $alignr
-#${battery_bar BAT0}
-#
-#Esto nos muestra la conexion con una barra y su potencia
+#Esto nos muestra la potencia de la conexión wifi
 ${font Ubuntu:style=bold:size=13}Redes $hr
 ${font Ubuntu:style=bold:size=9}Intensidad WIFI $alignr ${wireless_link_qual wlo1} %
-#Esto nos muestra la velocidad de descarga y subida de internet con graficos
+#Esto nos muestra la velocidad de descarga y subida de internet
 ${font Ubuntu:style=bold:size=9}Descarga $alignr ${downspeed wlo1}/s
-#${downspeedgraph wlan0 30,210 01df01 10fd10}
 ${font Ubuntu:style=bold:size=9}Subida $alignr ${upspeed wlo1}/s
-#${upspeedgraph wlan0 30,210 0000ff ff0000}
 
-#Esto muestra el uso de la CPU de las aplicaciones que mas hacen uso de ella
+#Esto nos muestra el uso de la CPU de las aplicaciones que más hacen uso de ella
 ${font Ubuntu:style=bold:size=13}Uso CPU aplicaciones $hr
 ${font Ubuntu:style=bold:size=9}${top name 1}$alignr${top cpu 1} %
 ${top name 2}$alignr${top cpu 2} %
 #${top name 3}$alignr${top cpu 3} %
  
-#Esto nos muestra el procentaje de RAM que usan las aplicaciones de ella
+#Esto nos muestra el procentaje de RAM que usan las aplicaciones que más memoria consumen
 ${font Ubuntu:style=bold:size=13}Uso RAM aplicaciones $hr
 ${font Ubuntu:style=bold:size=9}${top_mem name 1}$alignr${top_mem mem 1} %
 ${top_mem name 2}$alignr${top_mem mem 2} %
 #${top_mem name 3}$alignr${top_mem mem 3} %
-
-#Esto muestra el uso de la GPU de las aplicaciones que mas hacen uso de ella
-#${font Ubuntu:style=bold:size=13}Uso GPU aplicaciones $hr
-#${font Ubuntu:style=bold:size=9}$alignr${top cpu 2} %
-#$alignr${nvtop Graphic 1} %
